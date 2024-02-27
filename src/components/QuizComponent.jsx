@@ -1,35 +1,42 @@
-// components/QuizComponent.jsx
-
 import React, { useEffect, useState } from 'react';
-import { fetchQuizQuestions } from '../api/Api'; // Corrected import path
+import axios from 'axios';
 
 const QuizComponent = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [correctAnswers, setCorrectAnswers] = useState(null); // Changed initial state to null
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Added state to track current question index
+  const [correctAnswers, setCorrectAnswers] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchQuizQuestions = async () => {
       try {
-        const data = await fetchQuizQuestions();
-        setQuestions(data.results.map(question => ({
-          ...question,
-          answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
-        })));
-        setSelectedAnswers(Array(data.results.length).fill(''));
+        const cachedData = localStorage.getItem('cachedQuestions');
+        if (cachedData) {
+          setQuestions(JSON.parse(cachedData));
+          setSelectedAnswers(Array(JSON.parse(cachedData).length).fill(''));
+        } else {
+          const BASE_URL = 'https://opentdb.com/api.php';
+          const { data } = await axios.get(`${BASE_URL}?amount=10&category=18&difficulty=easy&type=multiple&encode=url3986`);
+          if (Array.isArray(data.results)) {
+            const shuffledQuestions = data.results.map(question => ({
+              ...question,
+              answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
+            }));
+            setQuestions(shuffledQuestions);
+            setSelectedAnswers(Array(shuffledQuestions.length).fill(''));
+            localStorage.setItem('cachedQuestions', JSON.stringify(shuffledQuestions));
+          } else {
+            setError('Invalid data format');
+          }
+        }
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        setError('Error fetching quiz questions');
       }
     };
 
-    fetchQuestions();
+    fetchQuizQuestions();
   }, []);
-
-  // Function to decode URL encoded strings
-  const decodeString = (str) => {
-    return decodeURIComponent(str);
-  };
 
   // Function to shuffle array
   const shuffleArray = (array) => {
@@ -41,14 +48,16 @@ const QuizComponent = () => {
     return shuffledArray;
   };
 
-  // Function to handle selecting an answer
+  const decodeString = (str) => {
+    return decodeURIComponent(str);
+  };
+
   const handleAnswerSelect = (selectedAnswer) => {
     const updatedSelectedAnswers = [...selectedAnswers];
     updatedSelectedAnswers[currentQuestionIndex] = selectedAnswer;
     setSelectedAnswers(updatedSelectedAnswers);
   };
 
-  // Function to handle moving to the next question
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -57,7 +66,6 @@ const QuizComponent = () => {
     }
   };
 
-  // Function to calculate correct answers
   const calculateCorrectAnswers = () => {
     let correctCount = 0;
     questions.forEach((question, index) => {
@@ -68,11 +76,9 @@ const QuizComponent = () => {
     setCorrectAnswers(correctCount);
   };
 
-  // Render quiz questions
   return (
     <div>
-      <h2>Quiz Questions</h2>
-      {/* Conditionally render the current question */}
+      {error && <p>Error: {error}</p>}
       {questions.length > 0 && currentQuestionIndex < questions.length && (
         <div>
           <p>
@@ -96,7 +102,6 @@ const QuizComponent = () => {
           <button onClick={moveToNextQuestion}>Next Question</button>
         </div>
       )}
-      {/* Conditionally render the correct answers section */}
       {correctAnswers !== null && (
         <div>
           <h2>Quiz Result</h2>
