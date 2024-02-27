@@ -1,150 +1,89 @@
-import React, { useState, useEffect } from 'react';
+// QuizComponent.jsx
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { fetchQuizQuestions } from '../api/Api';
+import { useQuizState, useQuizDispatch } from '../contexts/QuizContext';
+import QuestionComponent from './QuestionComponent';
+import NextButtonComponent from './NextButtonComponent';
+import QuizResultComponent from './QuizResultComponent';
+import ErrorComponent from './ErrorComponent';
 
-// Question component
-const Question = ({ question, selectedAnswer, handleAnswerSelect }) => {
-  const decodeString = (str) => decodeURIComponent(str);
-
-  return (
-    <div>
-      <p>
-        <strong>Question: </strong> {decodeString(question.question)}
-      </p>
-      <form>
-        {question.answers.map((answer, answerIndex) => (
-          <div key={answerIndex}>
-            <input
-              type="radio"
-              id={`answer-${answerIndex}`}
-              name="answer"
-              value={answer}
-              checked={selectedAnswer === answer}
-              onChange={() => handleAnswerSelect(answer)}
-            />
-            <label htmlFor={`answer-${answerIndex}`}>{decodeString(answer)}</label>
-          </div>
-        ))}
-      </form>
-    </div>
-  );
-};
-
-// QuizResult component
-const QuizResult = ({ questions, selectedAnswers }) => {
-  const decodeString = (str) => decodeURIComponent(str);
-
-  return (
-    <div>
-      <h2>Quiz Result</h2>
-      <h3>Answers:</h3>
-      {questions.map((question, index) => (
-        <div key={index}>
-          <p>
-            <strong>Question {index + 1}: </strong> {decodeString(question.question)}
-          </p>
-          <ul>
-            {question.answers.map((answer, answerIndex) => (
-              <li
-                key={answerIndex}
-                style={{
-                  color:
-                    answer === question.correct_answer
-                      ? 'green'
-                      : selectedAnswers[index] === answer
-                      ? 'red'
-                      : 'inherit',
-                }}
-              >
-                {decodeString(answer)}
-              </li>
-            ))}
-          </ul>
-          <p>
-            Correct Answer: <span style={{ color: 'green' }}>{decodeString(question.correct_answer)}</span>
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// Quiz component
 const QuizComponent = () => {
-  // State variables
-  const [questions, setQuestions] = useState([]);
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [correctAnswers, setCorrectAnswers] = useState(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [error, setError] = useState(null);
+  const state = useQuizState();
+  const dispatch = useQuizDispatch();
 
-  // Fetch quiz questions on component mount
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestions = async () => {
       try {
         const cachedData = localStorage.getItem('cachedQuestions');
         if (cachedData) {
           const parsedData = JSON.parse(cachedData);
-          setQuestions(parsedData);
-          setSelectedAnswers(Array(parsedData.length).fill(''));
+          dispatch({ type: 'SET_QUESTIONS', payload: parsedData });
+          dispatch({ type: 'SET_SELECTED_ANSWERS', payload: Array(parsedData.length).fill('') });
         } else {
-          const shuffledQuestions = await fetchQuizQuestions();
-          setQuestions(shuffledQuestions);
-          setSelectedAnswers(Array(shuffledQuestions.length).fill(''));
-          localStorage.setItem('cachedQuestions', JSON.stringify(shuffledQuestions));
+          const data = await fetchQuizQuestions();
+          if (Array.isArray(data.results)) {
+            dispatch({ type: 'SET_QUESTIONS', payload: data.results });
+            dispatch({ type: 'SET_SELECTED_ANSWERS', payload: Array(data.results.length).fill('') });
+            localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
+          } else {
+            dispatch({ type: 'SET_ERROR', payload: 'Invalid data format' });
+          }
         }
       } catch (error) {
-        setError(error.message);
+        dispatch({ type: 'SET_ERROR', payload: 'Error fetching quiz questions' });
       }
     };
 
-    fetchData();
+    fetchQuestions();
+  }, [dispatch]);
+
+  const decodeString = useCallback((str) => {
+    return decodeURIComponent(str);
   }, []);
 
-  // Function to handle answer selection
-  const handleAnswerSelect = (selectedAnswer) => {
-    const updatedSelectedAnswers = [...selectedAnswers];
-    updatedSelectedAnswers[currentQuestionIndex] = selectedAnswer;
-    setSelectedAnswers(updatedSelectedAnswers);
-  };
-
-  // Function to move to the next question
-  const moveToNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+  const moveToNextQuestion = useCallback(() => {
+    if (state.currentQuestionIndex < state.questions.length - 1) {
+      dispatch({ type: 'SET_CURRENT_QUESTION_INDEX', payload: state.currentQuestionIndex + 1 });
     } else {
       calculateCorrectAnswers();
     }
-  };
+  }, [dispatch, state.currentQuestionIndex, state.questions.length]);
 
-  // Function to calculate correct answers
-  const calculateCorrectAnswers = () => {
+  const calculateCorrectAnswers = useCallback(() => {
     let correctCount = 0;
-    questions.forEach((question, index) => {
-      if (decodeURIComponent(question.correct_answer) === decodeURIComponent(selectedAnswers[index])) {
+    state.questions.forEach((question, index) => {
+      if (decodeString(question.correct_answer) === decodeString(state.selectedAnswers[index])) {
         correctCount++;
       }
     });
-    setCorrectAnswers(correctCount);
-  };
+    dispatch({ type: 'SET_CORRECT_ANSWERS', payload: correctCount });
+  }, [decodeString, dispatch, state.questions, state.selectedAnswers]);
 
-  return (
-    <div>
-      {error && <p>Error: {error}</p>}
-      {questions.length > 0 && currentQuestionIndex < questions.length && (
+  const renderContent = useMemo(() => {
+    if (state.error) {
+      return <ErrorComponent error={state.error} />;
+    } else if (state.questions.length > 0 && state.currentQuestionIndex < state.questions.length) {
+      return (
         <div>
-          <Question
-            question={questions[currentQuestionIndex]}
-            selectedAnswer={selectedAnswers[currentQuestionIndex]}
-            handleAnswerSelect={handleAnswerSelect}
+          <QuestionComponent
+            questionNumber={state.currentQuestionIndex}
+            question={state.questions[state.currentQuestionIndex]}
           />
-          <button onClick={moveToNextQuestion}>Next Question</button>
+          <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
         </div>
-      )}
-      {correctAnswers !== null && (
-        <QuizResult questions={questions} selectedAnswers={selectedAnswers} />
-      )}
-    </div>
-  );
+      );
+    } else if (state.correctAnswers !== null) {
+      return <QuizResultComponent />;
+    }
+  }, [
+    state.error,
+    state.questions,
+    state.currentQuestionIndex,
+    state.correctAnswers,
+    moveToNextQuestion,
+  ]);
+
+  return <div>{renderContent}</div>;
 };
 
 export default QuizComponent;
