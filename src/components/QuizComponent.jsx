@@ -1,15 +1,17 @@
 // QuizComponent.jsx
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchQuizQuestions } from '../api/Api';
-import { useQuizState, useQuizDispatch } from '../contexts/QuizContext';
 import QuestionComponent from './QuestionComponent';
 import NextButtonComponent from './NextButtonComponent';
 import QuizResultComponent from './QuizResultComponent';
 import ErrorComponent from './ErrorComponent';
 
 const QuizComponent = () => {
-  const state = useQuizState();
-  const dispatch = useQuizDispatch();
+  const [questions, setQuestions] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [correctAnswers, setCorrectAnswers] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -17,73 +19,72 @@ const QuizComponent = () => {
         const cachedData = localStorage.getItem('cachedQuestions');
         if (cachedData) {
           const parsedData = JSON.parse(cachedData);
-          dispatch({ type: 'SET_QUESTIONS', payload: parsedData });
-          dispatch({ type: 'SET_SELECTED_ANSWERS', payload: Array(parsedData.length).fill('') });
+          setQuestions(parsedData);
+          setSelectedAnswers(Array(parsedData.length).fill(''));
         } else {
           const data = await fetchQuizQuestions();
           if (Array.isArray(data.results)) {
-            dispatch({ type: 'SET_QUESTIONS', payload: data.results });
-            dispatch({ type: 'SET_SELECTED_ANSWERS', payload: Array(data.results.length).fill('') });
+            setQuestions(data.results);
+            setSelectedAnswers(Array(data.results.length).fill(''));
             localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
           } else {
-            dispatch({ type: 'SET_ERROR', payload: 'Invalid data format' });
+            setError('Invalid data format');
           }
         }
       } catch (error) {
-        dispatch({ type: 'SET_ERROR', payload: 'Error fetching quiz questions' });
+        setError('Error fetching quiz questions');
       }
     };
 
     fetchQuestions();
-  }, [dispatch]);
-
-  const decodeString = useCallback((str) => {
-    return decodeURIComponent(str);
   }, []);
 
-  const moveToNextQuestion = useCallback(() => {
-    if (state.currentQuestionIndex < state.questions.length - 1) {
-      dispatch({ type: 'SET_CURRENT_QUESTION_INDEX', payload: state.currentQuestionIndex + 1 });
+  const decodeString = (str) => {
+    return decodeURIComponent(str);
+  };
+
+  const handleAnswerSelect = (selectedAnswer) => {
+    const updatedSelectedAnswers = [...selectedAnswers];
+    updatedSelectedAnswers[currentQuestionIndex] = selectedAnswer;
+    setSelectedAnswers(updatedSelectedAnswers);
+  };
+
+  const moveToNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       calculateCorrectAnswers();
     }
-  }, [dispatch, state.currentQuestionIndex, state.questions.length]);
+  };
 
-  const calculateCorrectAnswers = useCallback(() => {
+  const calculateCorrectAnswers = () => {
     let correctCount = 0;
-    state.questions.forEach((question, index) => {
-      if (decodeString(question.correct_answer) === decodeString(state.selectedAnswers[index])) {
+    questions.forEach((question, index) => {
+      if (decodeString(question.correct_answer) === decodeString(selectedAnswers[index])) {
         correctCount++;
       }
     });
-    dispatch({ type: 'SET_CORRECT_ANSWERS', payload: correctCount });
-  }, [decodeString, dispatch, state.questions, state.selectedAnswers]);
+    setCorrectAnswers(correctCount);
+  };
 
-  const renderContent = useMemo(() => {
-    if (state.error) {
-      return <ErrorComponent error={state.error} />;
-    } else if (state.questions.length > 0 && state.currentQuestionIndex < state.questions.length) {
-      return (
+  return (
+    <div>
+      {error && <ErrorComponent error={error} />}
+      {questions.length > 0 && currentQuestionIndex < questions.length && (
         <div>
           <QuestionComponent
-            questionNumber={state.currentQuestionIndex}
-            question={state.questions[state.currentQuestionIndex]}
+            questionNumber={currentQuestionIndex}
+            question={questions[currentQuestionIndex]}
+            selectedAnswer={selectedAnswers[currentQuestionIndex]}
+            handleAnswerSelect={handleAnswerSelect}
           />
           <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
         </div>
-      );
-    } else if (state.correctAnswers !== null) {
-      return <QuizResultComponent />;
-    }
-  }, [
-    state.error,
-    state.questions,
-    state.currentQuestionIndex,
-    state.correctAnswers,
-    moveToNextQuestion,
-  ]);
+      )}
 
-  return <div>{renderContent}</div>;
+      {correctAnswers !== null && <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />}
+    </div>
+  );
 };
 
 export default QuizComponent;
