@@ -1,4 +1,5 @@
 # Quiz made with React.
+<img src="readmefiles/quiz-area-01.jpg" alt="View of the quiz area">
 
 ## Description:
 The Quiz App is a React application that allows users to take a quiz consisting of multiple-choice questions fetched from an API. It features dynamic question rendering, user answer selection, progress tracking, and displays quiz results upon completion. The app utilizes styled components for styling, error handling for fetching questions, and context API for state management.
@@ -42,7 +43,7 @@ Enjoy taking the quiz and testing your knowledge! If you encounter any issues or
 * Created repo on GitHub: https://github.com/RobertAhlin/react-quiz
 * Cloned and opened with VS Code.
 * App created with Vite: `npm init vite@latest . -- --template react`
-* Ran `npm install´
+* Ran `npm install`
 * App started with: `npm run dev`  
 <img src="readmefiles/vite-react-start.jpg" alt="Vite + React logos">
 
@@ -54,7 +55,7 @@ Documentation is found [here](https://opentdb.com/api_config.php).
 
 The API file, `Api.jsx`, contains a function named `fetchQuizQuestions` responsible for fetching quiz questions from an external API. Here's an explanation of its functionality:
 
-### fetchQuizQuestions Function:
+**fetchQuizQuestions Function:**
 - This function is an asynchronous function, indicating that it performs an asynchronous operation, such as making an HTTP request.
 - It utilizes the `axios` library to perform the HTTP GET request to the specified API endpoint.
 - The API endpoint used is `'https://opentdb.com/api.php'`, which is the Open Trivia Database API.
@@ -65,6 +66,14 @@ The API file, `Api.jsx`, contains a function named `fetchQuizQuestions` responsi
 - If there's an error during the API request or the data format is invalid, it throws an error with an appropriate message.
 
 Overall, this function serves to fetch quiz questions from the Open Trivia Database API and format them for use in the quiz application. It encapsulates the logic for making HTTP requests, handling responses, and formatting the retrieved data.
+
+# Dependencies:
+- React
+- Axios
+- PropTypes
+- Styled-components
+
+Make sure you have Node.js and npm (Node Package Manager) installed on your machine before proceeding with the installation steps below.
 
 # Components
 
@@ -120,11 +129,12 @@ Components are styled using "css-in-js" approach with Styled Components.
     4. **QuizArea** in **QuizComponent.jsx**: Wraps the quiz area and applies styling using styled-components.
     5. **QuizResultContainer**, **QuestionContainer**, **CorrectAnswer**, and **IncorrectAnswer** in **QuizResultComponent.jsx**: Styled components used to format the quiz result display.
 
-- [x] **Hooks Usage:**
-1. useReducer:
-In the QuizProvider component within QuizContext.jsx, useReducer is used to manage the state and dispatch actions.  
-2. useContext:
-In the useQuizState and useQuizDispatch custom hooks within QuizContext.jsx, useContext is used to access the state and dispatch functions from the context provider. Here's how it's implemented:
+- [x] **Hooks Usage:**  
+The Quiz uses `useReducer`and `useContext`:
+    1. useReducer:
+    In the QuizProvider component within QuizContext.jsx, useReducer is used to manage the state and dispatch actions.  
+    2. useContext:
+    In the useQuizState and useQuizDispatch custom hooks within QuizContext.jsx, useContext is used to access the state and dispatch functions from the context provider.
 
 ## For VG (Additional Requirements for Higher Grade):
 - [x] **Component Count:**
@@ -134,9 +144,13 @@ Additionally, the App component in App.jsx is also a component, but it serves as
 The code formatting is consistent, Prettier extension is installed in VS Code.
 <img src="readmefiles/prettier.jpg" alt="showing prettier extension installed in VS Code">
 
+The application start without any errors in the console:
+<img src="readmefiles/starting-without-errors.jpg" alt="view of empty console">
+
+
 # Installation and Setup:
 1. Clone the Repository:
-`git clone https://github.com/your-username/quiz-app.git`
+`git clone https://github.com/RobertAhlin/react-quiz.git`
 
 2. Navigate to the Project Directory:
 `cd quiz-app`
@@ -152,10 +166,3 @@ This will start the development server and open the Quiz App in your default web
 5. Access the Application:
 Once the development server is started, you can access the Quiz App by navigating to http://localhost:3000 in your web browser.
 
-## Dependencies:
-- React
-- Axios
-- PropTypes
-- Styled-components
-
-Make sure you have Node.js and npm (Node Package Manager) installed on your machine before proceeding with the installation steps.
