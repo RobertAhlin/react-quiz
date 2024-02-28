@@ -4,7 +4,25 @@ import QuestionComponent from './QuestionComponent';
 import NextButtonComponent from './NextButtonComponent';
 import QuizResultComponent from './QuizResultComponent';
 import ErrorComponent from './ErrorComponent';
-import RestartButtonComponent from './RestartButtonComponent'; // Import the RestartButtonComponent
+import RestartButtonComponent from './RestartButtonComponent';
+import styled from 'styled-components';
+
+// Styled component for the container
+const Container = styled.div`
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  height: 100vh; /* Make the container take up the full height of the viewport */
+`;
+
+// Styled component for the quiz area
+const QuizArea = styled.div`
+  left: 50%;
+  width: 80%; /* Adjust the width as needed */
+  background-color: #f2f2f2; /* Light gray background color */
+  padding: 20px; /* Add some padding for spacing */
+  border-radius: 10px; /* Rounded corners for the box */
+`;
 
 const QuizComponent = () => {
   const [questions, setQuestions] = useState([]);
@@ -80,27 +98,29 @@ const QuizComponent = () => {
   };
 
   return (
-    <div>
-      {error && <ErrorComponent error={error} />}
-      {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
-        <div>
-          <QuestionComponent
-            questionNumber={currentQuestionIndex}
-            question={questions[currentQuestionIndex]}
-            selectedAnswer={selectedAnswers[currentQuestionIndex]}
-            handleAnswerSelect={handleAnswerSelect}
-          />
-          <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
-        </div>
-      )}
+    <Container> {/* Apply styles to the Container */}
+      <QuizArea> {/* Apply styles to the QuizArea */}
+        {error && <ErrorComponent error={error} />}
+        {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
+          <div>
+            <QuestionComponent
+              questionNumber={currentQuestionIndex}
+              question={questions[currentQuestionIndex]}
+              selectedAnswer={selectedAnswers[currentQuestionIndex]}
+              handleAnswerSelect={handleAnswerSelect}
+            />
+            <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
+          </div>
+        )}
 
-      {quizCompleted && (
-        <div>
-          <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />
-          <RestartButtonComponent onClick={handleRestartQuiz} /> {/* Render RestartButtonComponent */}
-        </div>
-      )}
-    </div>
+        {quizCompleted && (
+          <div>
+            <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />
+            <RestartButtonComponent onClick={handleRestartQuiz} />
+          </div>
+        )}
+      </QuizArea>
+    </Container>
   );
 };
 
