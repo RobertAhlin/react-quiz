@@ -1,7 +1,43 @@
 # Quiz made with React.
 
+## Description:
+The Quiz App is a React application that allows users to take a quiz consisting of multiple-choice questions fetched from an API. It features dynamic question rendering, user answer selection, progress tracking, and displays quiz results upon completion. The app utilizes styled components for styling, error handling for fetching questions, and context API for state management.
 
-# Getting started
+### Quiz Application Usage Instructions:
+
+1. **Starting the Quiz:**
+   - Upon opening the Quiz Application in your web browser, you will be presented with the firs quiz question.
+   
+2. **Answering Questions:**
+   - Once the quiz starts, each question will be displayed one by one.
+   - Read the question carefully and select your answer by clicking on the radio button next to the option you choose.
+   - After selecting your answer, click the "Next Question" button to move on to the next question.
+   - You can only select one answer per question.
+
+3. **Viewing Results:**
+   - After answering all the questions, you will be presented to the results.
+   - On the results page, you can see the total number of correct answers and a breakdown of each question along with your selected answer and the correct answer.
+   - Correct answers are highlighted in green, and incorrect answers are highlighted in red.
+
+4. **Restarting the Quiz:**
+   - If you wish to retake the quiz, simply click on the "Restart Quiz" button at the bottom of the results page.
+   - This will reset the quiz, allowing you to start again from the beginning.
+
+5. **Navigation:**
+   - You go only go to the next question using the "Next Question" button.
+   - Once you reach the end of the quiz, you will automatically be redirected to the results page.
+
+6. **Progress Bar:**
+   - Throughout the quiz, a progress bar will indicate your progress relative to the total number of questions.
+   - The progress bar visually represents how far along you are in completing the quiz.
+
+7. **Error Handling:**
+   - If there are any errors encountered during the quiz, such as difficulty in fetching questions or unexpected errors, appropriate error messages will be displayed to alert you.
+
+Enjoy taking the quiz and testing your knowledge! If you encounter any issues or have feedback, feel free to reach out for assistance.
+
+# Developing
+## Getting started
 
 * Created repo on GitHub: https://github.com/RobertAhlin/react-quiz
 * Cloned and opened with VS Code.
@@ -13,6 +49,9 @@
 * Selected Axios for my API handling. Installed with `npm install axios`
 
 # API
+Using the [Open Trivia Database API](https://opentdb.com/).  
+Documentation is found [here](https://opentdb.com/api_config.php).
+
 The API file, `Api.jsx`, contains a function named `fetchQuizQuestions` responsible for fetching quiz questions from an external API. Here's an explanation of its functionality:
 
 ### fetchQuizQuestions Function:
@@ -54,30 +93,7 @@ Overall, this function serves to fetch quiz questions from the Open Trivia Datab
    - Renders a button to restart the quiz from the beginning.
 
 
----
-Project Title and Description: Provide a clear and concise title for your project, along with a brief description of what it does.
-
-Installation Instructions: Explain how users can install and set up your project locally on their machines. Include any dependencies that need to be installed and any setup steps required.
-
-Usage: Provide instructions on how to use your quiz application. Explain how users can start the quiz, answer questions, and view their results.
-
-API Documentation: If your project uses an external API like the Open Trivia Database, provide a link to the API documentation and explain how your project interacts with it.
-
-Technologies Used: List the technologies, libraries, and frameworks used in your project. Include versions if applicable.
-
-File Structure: Describe the structure of your project's files and folders to help users navigate the codebase.
-
-Code Examples: Include some code snippets or examples to illustrate key features or functionality of your project. This can help users understand how your code works.
-
-Contributing: Provide guidelines for others who might want to contribute to your project, including how they can submit bug reports, feature requests, or pull requests.
-
-License: Specify the license under which your project is released. This informs users of what they're allowed to do with your code.
-
-Credits: Acknowledge any third-party resources, libraries, or tutorials that you used in your project.
-
-
-
-# Project Assessment
+# Check project assessment criteria
 
 ## For G (Passing Requirements):
 - [x] **React Setup:**  
@@ -116,5 +132,30 @@ See function component section.
 Additionally, the App component in App.jsx is also a component, but it serves as the entry point of the application and does not render any UI components directly.
 - [x] **Code Formatting:**
 The code formatting is consistent, Prettier extension is installed in VS Code.
-- [ ] **Unit Testing & Error Handling:** Your project seems to demonstrate unit testing and error handling, as evident from the presence of error components and the logic for error handling in fetching quiz questions.
+<img src="readmefiles/prettier.jpg" alt="showing prettier extension installed in VS Code">
 
+# Installation and Setup:
+1. Clone the Repository:
+`git clone https://github.com/your-username/quiz-app.git`
+
+2. Navigate to the Project Directory:
+`cd quiz-app`
+
+3. Install Dependencies:
+`npm install`
+This will install all the necessary dependencies required for the project to run.
+
+4. Start the Development Server:
+`npm start`
+This will start the development server and open the Quiz App in your default web browser.
+
+5. Access the Application:
+Once the development server is started, you can access the Quiz App by navigating to http://localhost:3000 in your web browser.
+
+## Dependencies:
+- React
+- Axios
+- PropTypes
+- Styled-components
+
+Make sure you have Node.js and npm (Node Package Manager) installed on your machine before proceeding with the installation steps.
