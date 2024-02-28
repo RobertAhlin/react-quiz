@@ -53,7 +53,7 @@ Enjoy taking the quiz and testing your knowledge! If you encounter any issues or
 Using the [Open Trivia Database API](https://opentdb.com/).  
 Documentation is found [here](https://opentdb.com/api_config.php).
 
-The API file, `Api.jsx`, contains a function named `fetchQuizQuestions` responsible for fetching quiz questions from an external API. Here's an explanation of its functionality:
+The API file, `api.jsx`, contains a function named `fetchQuizQuestions` responsible for fetching quiz questions from an external API.
 
 **fetchQuizQuestions Function:**
 - This function is an asynchronous function, indicating that it performs an asynchronous operation, such as making an HTTP request.
@@ -64,8 +64,6 @@ The API file, `Api.jsx`, contains a function named `fetchQuizQuestions` responsi
 - If the data format is valid (i.e., it contains an array of questions), it formats each question by combining the incorrect answers with the correct answer into an `answers` array.
 - The formatted questions are returned as an array of objects, where each object represents a single quiz question with its associated answers.
 - If there's an error during the API request or the data format is invalid, it throws an error with an appropriate message.
-
-Overall, this function serves to fetch quiz questions from the Open Trivia Database API and format them for use in the quiz application. It encapsulates the logic for making HTTP requests, handling responses, and formatting the retrieved data.
 
 # Dependencies:
 - React
@@ -119,7 +117,7 @@ Project includes at least 5 function components
     8. RestartButtonComponent
 
 - [x] **API Data Fetching:**  
-Data is fetched from an external API using Axios in the `fetchQuizQuestions` function in `Api.jsx`.
+Data is fetched from an external API using Axios in the `fetchQuizQuestions` function in `api.jsx`.
 
 - [x] **CSS-in-JS Styling:**  
 Components are styled using "css-in-js" approach with Styled Components.
@@ -149,20 +147,20 @@ The application start without any errors in the console:
 
 
 # Installation and Setup:
-1. Clone the Repository:
+1. Clone the Repository:  
 `git clone https://github.com/RobertAhlin/react-quiz.git`
 
-2. Navigate to the Project Directory:
-`cd quiz-app`
+2. Navigate to the Project Directory:  
+Make sure you are in the root folder `react-quiz`
 
-3. Install Dependencies:
-`npm install`
+3. Install Dependencies:  
+`npm install`  
 This will install all the necessary dependencies required for the project to run.
 
-4. Start the Development Server:
-`npm start`
+4. Start the Development Server:  
+`npm start`  
 This will start the development server and open the Quiz App in your default web browser.
 
-5. Access the Application:
-Once the development server is started, you can access the Quiz App by navigating to http://localhost:3000 in your web browser.
+5. Access the Application:  
+Once the development server is started, you can access the Quiz App in your web browser. (E.g. http://localhost:3000 )
 
