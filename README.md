@@ -45,7 +45,6 @@ Enjoy taking the quiz and testing your knowledge! If you encounter any issues or
 * App created with Vite: `npm init vite@latest . -- --template react`
 * Ran `npm install`
 * App started with: `npm run dev`  
-<img src="readmefiles/vite-react-start.jpg" alt="Vite + React logos">
 
 * Selected Axios for my API handling. Installed with `npm install axios`
 
@@ -106,11 +105,12 @@ Make sure you have Node.js and npm (Node Package Manager) installed on your mach
 # Check project assessment criteria
 
 ## For G (Passing Requirements):
-**React Setup:**  
-It is set up with a React project using `create-react-app`.
+**Set up a React project with create-react-app or Vite**  
+- App created with Vite: `npm init vite@latest . -- --template react`  
+<img src="readmefiles/vite-react-start.jpg" alt="Vite + React logos">
 
-- **Function Components:**  
-Project includes at least 5 function components.  
+- **At least 5 function components:**  
+Yes, it has 8 to meat the "VG" criteria.  
     1. ErrorComponent  
     2. LoadingComponent  
     3. NextButtonComponent  
@@ -120,10 +120,10 @@ Project includes at least 5 function components.
     7. QuizResultComponent  
     8. RestartButtonComponent  
 
-- **API Data Fetching:**  
+- **Get data from an external API:**  
 Data is fetched from an external API using Axios in the `fetchQuizQuestions` function in `api.jsx`.
 
-- **CSS-in-JS Styling:**  
+- **Style components with CSS-in-JS Styling:**  
 Components are styled using "css-in-js" approach with Styled Components.  
     1. **LoadingComponent.jsx**: Defines a loading spinner with styles using styled-components.  
     2. **NextButtonComponent.jsx**: Styles the next button with styled-components.  
@@ -131,7 +131,7 @@ Components are styled using "css-in-js" approach with Styled Components.
     4. **QuizArea** in **QuizComponent.jsx**: Wraps the quiz area and applies styling using styled-components.  
     5. **QuizResultContainer**, **QuestionContainer**, **CorrectAnswer**, and **IncorrectAnswer** in **QuizResultComponent.jsx**: Styled components used to format the quiz result display.
 
-- **Hooks Usage:**  
+- **Use at least 2 or more following hooks useReducer, useContext, useMemo and useCallback:**  
 The Quiz uses `useReducer`and `useContext`:  
     1. useReducer:
     In the QuizProvider component within QuizContext.jsx, useReducer is used to manage the state and dispatch actions.  
@@ -139,8 +139,8 @@ The Quiz uses `useReducer`and `useContext`:
     In the useQuizState and useQuizDispatch custom hooks within QuizContext.jsx, useContext is used to access the state and dispatch functions from the context provider.  
 
 ## For VG (Additional Requirements for Higher Grade):
-- **Component Count:**
-See function component section.  
+- **Use at least 8 components:**
+Yes, see function component section above.  
 Additionally, the App component in App.jsx is also a component, but it serves as the entry point of the application and does not render any UI components directly.
 
 - **Code Formatting:**
