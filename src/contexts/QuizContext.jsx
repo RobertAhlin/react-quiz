@@ -1,4 +1,4 @@
-// QuizContext.js
+// QuizContext.jsx
 import React, { createContext, useContext, useReducer } from 'react';
 
 const QuizStateContext = createContext();

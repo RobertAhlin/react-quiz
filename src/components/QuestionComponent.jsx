@@ -1,3 +1,4 @@
+//QuiestionComponent.jsx
 import React from 'react';
 
 const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAnswerSelect }) => {
