@@ -116,6 +116,7 @@ const QuizComponent = () => {
             <div>
               <QuestionComponent
                 questionNumber={currentQuestionIndex}
+                <br />
                 question={questions[currentQuestionIndex]}
                 selectedAnswer={selectedAnswers[currentQuestionIndex]}
                 handleAnswerSelect={handleAnswerSelect}

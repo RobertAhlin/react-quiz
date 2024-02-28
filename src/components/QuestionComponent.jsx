@@ -5,9 +5,14 @@ const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAns
 
   return (
     <div>
-      <p>
-        <strong>Question {questionNumber + 1}: </strong> {decodeString(question.question)}
-      </p>
+      <div>
+        <strong>Question {questionNumber + 1}:</strong>
+      </div>
+      <div>
+        <p>
+          {decodeString(question.question)}
+        </p>
+      </div>
       <form>
         {question.answers.map((answer, answerIndex) => (
           <div key={answerIndex}>
@@ -26,6 +31,7 @@ const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAns
     </div>
   );
 };
+
 
 // PropTypes validation
 QuestionComponent.propTypes = {
