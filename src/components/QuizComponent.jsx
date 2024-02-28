@@ -11,8 +11,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-  height: 100vh; /* Make the container take up the full height of the viewport */
+  margin-top: 2vh;
 `;
 
 // Styled component for the quiz area
