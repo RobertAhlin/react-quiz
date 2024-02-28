@@ -73,6 +73,9 @@ The API file, `api.jsx`, contains a function named `fetchQuizQuestions` responsi
 
 Make sure you have Node.js and npm (Node Package Manager) installed on your machine before proceeding with the installation steps below.
 
+# Sapling structure
+<img src="readmefiles/sapling-view.jpg" alt="View of the Sapling structure">
+
 # Components
 
 1. **ErrorComponent**:

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background-color: #007bff;
+  background-color: #0844a3;
   color: white;
   padding: 10px 20px;
   border: none;
