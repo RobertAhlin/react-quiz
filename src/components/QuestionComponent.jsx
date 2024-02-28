@@ -1,4 +1,7 @@
+//QuestionComponent.jsx
+
 import PropTypes from 'prop-types';
+
 const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAnswerSelect }) => {
   const decodeString = (str) => decodeURIComponent(str);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+// RestartButtonComponent.jsx
 
 const RestartButtonComponent = ({ onClick }) => {
   return (

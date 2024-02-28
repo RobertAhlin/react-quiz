@@ -5,6 +5,8 @@ import NextButtonComponent from './NextButtonComponent';
 import QuizResultComponent from './QuizResultComponent';
 import ErrorComponent from './ErrorComponent';
 import RestartButtonComponent from './RestartButtonComponent';
+import LoadingComponent from './LoadingComponent';
+import ProgressBarComponent from './ProgressBarComponent'; // Import ProgressBarComponent
 import styled from 'styled-components';
 
 // Styled component for the container
@@ -16,7 +18,6 @@ const Container = styled.div`
 
 // Styled component for the quiz area
 const QuizArea = styled.div`
-  left: 50%;
   width: 80%; /* Adjust the width as needed */
   background-color: #f2f2f2; /* Light gray background color */
   padding: 20px; /* Add some padding for spacing */
@@ -30,6 +31,7 @@ const QuizComponent = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   const fetchQuestions = async () => {
     try {
@@ -38,12 +40,14 @@ const QuizComponent = () => {
         const parsedData = JSON.parse(cachedData);
         setQuestions(parsedData);
         setSelectedAnswers(Array(parsedData.length).fill(''));
+        setLoading(false); // Set loading to false after fetching cached questions
       } else {
         const data = await fetchQuizQuestions();
         if (Array.isArray(data.results)) {
           setQuestions(data.results);
           setSelectedAnswers(Array(data.results.length).fill(''));
           localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
+          setLoading(false); // Set loading to false after fetching new questions
         } else {
           setError('Invalid data format');
         }
@@ -93,32 +97,41 @@ const QuizComponent = () => {
     setCurrentQuestionIndex(0);
     setError(null);
     setQuizCompleted(false);
+    setLoading(true); // Set loading to true when restarting quiz
     fetchQuestions(); // Fetch new questions
   };
 
+  // Calculate progress percentage
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
   return (
     <Container> {/* Apply styles to the Container */}
-      <QuizArea> {/* Apply styles to the QuizArea */}
-        {error && <ErrorComponent error={error} />}
-        {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
-          <div>
-            <QuestionComponent
-              questionNumber={currentQuestionIndex}
-              question={questions[currentQuestionIndex]}
-              selectedAnswer={selectedAnswers[currentQuestionIndex]}
-              handleAnswerSelect={handleAnswerSelect}
-            />
-            <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
-          </div>
-        )}
+      {loading ? (
+        <LoadingComponent />
+      ) : (
+        <QuizArea> {/* Apply styles to the QuizArea */}
+          <ProgressBarComponent progress={progress} /> {/* Place progress bar inside the QuizArea */}
+          {error && <ErrorComponent error={error} />}
+          {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
+            <div>
+              <QuestionComponent
+                questionNumber={currentQuestionIndex}
+                question={questions[currentQuestionIndex]}
+                selectedAnswer={selectedAnswers[currentQuestionIndex]}
+                handleAnswerSelect={handleAnswerSelect}
+              />
+              <NextButtonComponent moveToNextQuestion={moveToNextQuestion} />
+            </div>
+          )}
 
-        {quizCompleted && (
-          <div>
-            <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />
-            <RestartButtonComponent onClick={handleRestartQuiz} />
-          </div>
-        )}
-      </QuizArea>
+          {quizCompleted && (
+            <div>
+              <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />
+              <RestartButtonComponent onClick={handleRestartQuiz} />
+            </div>
+          )}
+        </QuizArea>
+      )}
     </Container>
   );
 };
