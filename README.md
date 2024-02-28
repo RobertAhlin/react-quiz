@@ -109,21 +109,21 @@ Make sure you have Node.js and npm (Node Package Manager) installed on your mach
 **React Setup:**  
 It is set up with a React project using `create-react-app`.
 
-**Function Components:**  
-Project includes at least 5 function components 
-    1. ErrorComponent
-    2. LoadingComponent
-    3. NextButtonComponent
-    4. ProgressBarComponent
-    5. QuestionComponent
-    6. QuizComponent
-    7. QuizResultComponent
-    8. RestartButtonComponent
+- **Function Components:**  
+Project includes at least 5 function components.  
+    1. ErrorComponent  
+    2. LoadingComponent  
+    3. NextButtonComponent  
+    4. ProgressBarComponent  
+    5. QuestionComponent  
+    6. QuizComponent  
+    7. QuizResultComponent  
+    8. RestartButtonComponent  
 
-**API Data Fetching:**  
+- **API Data Fetching:**  
 Data is fetched from an external API using Axios in the `fetchQuizQuestions` function in `api.jsx`.
 
-**CSS-in-JS Styling:**  
+- **CSS-in-JS Styling:**  
 Components are styled using "css-in-js" approach with Styled Components.  
     1. **LoadingComponent.jsx**: Defines a loading spinner with styles using styled-components.  
     2. **NextButtonComponent.jsx**: Styles the next button with styled-components.  
@@ -131,7 +131,7 @@ Components are styled using "css-in-js" approach with Styled Components.
     4. **QuizArea** in **QuizComponent.jsx**: Wraps the quiz area and applies styling using styled-components.  
     5. **QuizResultContainer**, **QuestionContainer**, **CorrectAnswer**, and **IncorrectAnswer** in **QuizResultComponent.jsx**: Styled components used to format the quiz result display.
 
-**Hooks Usage:**  
+- **Hooks Usage:**  
 The Quiz uses `useReducer`and `useContext`:  
     1. useReducer:
     In the QuizProvider component within QuizContext.jsx, useReducer is used to manage the state and dispatch actions.  
@@ -139,15 +139,15 @@ The Quiz uses `useReducer`and `useContext`:
     In the useQuizState and useQuizDispatch custom hooks within QuizContext.jsx, useContext is used to access the state and dispatch functions from the context provider.  
 
 ## For VG (Additional Requirements for Higher Grade):
-**Component Count:**
+- **Component Count:**
 See function component section.  
 Additionally, the App component in App.jsx is also a component, but it serves as the entry point of the application and does not render any UI components directly.
 
-**Code Formatting:**
+- **Code Formatting:**
 The code formatting is consistent, Prettier extension is installed in VS Code.
 <img src="readmefiles/prettier.jpg" alt="showing prettier extension installed in VS Code">
 
-**Start application test**
+### Start application test
 The application start with `nmp start` and without any errors in the console:
 <img src="readmefiles/starting-without-errors.jpg" alt="view of empty console">
 
