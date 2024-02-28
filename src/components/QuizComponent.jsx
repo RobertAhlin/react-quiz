@@ -18,7 +18,7 @@ const Container = styled.div`
 
 // Styled component for the quiz area
 const QuizArea = styled.div`
-  width: 80%;
+  width: 40rem;
   background-color: #f2f2f2; /* Light gray background color */
   padding: 20px;
   border-radius: 10px;
