@@ -49,8 +49,8 @@ Enjoy taking the quiz and testing your knowledge! If you encounter any issues or
 * Selected Axios for my API handling. Installed with `npm install axios`
 
 # API
-Using the [Open Trivia Database API](https://opentdb.com/).  
-Documentation is found [here](https://opentdb.com/api_config.php).
+Using the <a href="https://opentdb.com/" target="_blank">Open Trivia Database API</a>.  
+Documentation is found <a href="https://opentdb.com/api_config.php" target="_blank">here</a>. (Click "API DOCUMENTATION" button)
 
 The API file, `api.jsx`, contains a function named `fetchQuizQuestions` responsible for fetching quiz questions from an external API.
 
