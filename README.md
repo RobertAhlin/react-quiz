@@ -125,6 +125,11 @@ Make sure you have Node.js and npm (Node Package Manager) installed on your mach
 
 # Check project assessment criteria
 
+Commits has been used through the project development.
+Currently 30 commits has been done.  
+Screenshot from GitGub:  
+<img src="readmefiles/commits.jpg" alt="Image showing 30 commits done">
+
 ## For G (Passing Requirements):
 **Set up a React project with create-react-app or Vite**  
 - App created with Vite: `npm init vite@latest . -- --template react`  
