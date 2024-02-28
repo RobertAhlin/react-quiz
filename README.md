@@ -29,23 +29,30 @@ Overall, this function serves to fetch quiz questions from the Open Trivia Datab
 
 # Components
 
-1. QuestionComponent.jsx:  
-This component renders a single question along with its answers. It allows users to select an answer from multiple choices.
+1. **ErrorComponent**:
+   - Renders an error message when an error occurs during the quiz.
 
-2. NextButtonComponent.jsx:  
-This component renders a button that allows users to move to the next question in the quiz.
+2. **LoadingComponent**:
+   - Renders a loading spinner while fetching quiz questions or performing other asynchronous tasks.
 
-3. QuizResultComponent.jsx:  
-This component displays the result of the quiz, including the total number of correct answers and a breakdown of each question with the user's selected answer and the correct answer.
+3. **NextButtonComponent**:
+   - Renders a button to move to the next question in the quiz.
 
-4. ErrorComponent.jsx:  
-This component is responsible for rendering an error message in case there is an error fetching quiz questions or any other error that occurs during the quiz.
+4. **ProgressBarComponent**:
+   - Renders a progress bar to visualize the progress of the quiz.
 
-5. RestartButtonComponent.jsx:  
-This component renders a button that allows users to restart the quiz from the beginning.
+5. **QuestionComponent**:
+   - Renders a single question along with its options (answers) for the user to select.
 
-6. QuizComponent.jsx:  
-This is the main component that orchestrates the entire quiz. It manages the state of the quiz, fetches questions, handles user answers, progresses through questions, displays results, and allows the user to restart the quiz.
+6. **QuizComponent**:
+   - Manages the state of the quiz, including fetching questions, handling user answers, and determining the quiz's completion.
+
+7. **QuizResultComponent**:
+   - Renders the result of the quiz, including the total number of correct answers and the user's selected answers compared to the correct ones.
+
+8. **RestartButtonComponent**:
+   - Renders a button to restart the quiz from the beginning.
+
 
 ---
 Project Title and Description: Provide a clear and concise title for your project, along with a brief description of what it does.
@@ -77,19 +84,37 @@ Credits: Acknowledge any third-party resources, libraries, or tutorials that you
 It is set up with a React project using `create-react-app`.
 - [x] **Function Components:**  
 Project includes at least 5 function components 
-    - QuestionComponent 
-    - NextButtonComponent
-    - QuizResultComponent
-    - ErrorComponent
-    - RestartButtonComponent
+    1. ErrorComponent
+    2. LoadingComponent
+    3. NextButtonComponent
+    4. ProgressBarComponent
+    5. QuestionComponent
+    6. QuizComponent
+    7. QuizResultComponent
+    8. RestartButtonComponent
+
 - [x] **API Data Fetching:**  
 Data is fetched from an external API using Axios in the `fetchQuizQuestions` function in `Api.jsx`.
+
 - [x] **CSS-in-JS Styling:**  
 Components are styled using "css-in-js" approach with Styled Components.
-- [x] **Hooks Usage:** You utilize at least 2 of the specified hooks (`useState`, `useEffect`), and optionally others like `useContext`.
+    1. **LoadingComponent.jsx**: Defines a loading spinner with styles using styled-components.
+    2. **NextButtonComponent.jsx**: Styles the next button with styled-components.
+    3. **ProgressBarComponent.jsx**: Styles the progress bar with styled-components.
+    4. **QuizArea** in **QuizComponent.jsx**: Wraps the quiz area and applies styling using styled-components.
+    5. **QuizResultContainer**, **QuestionContainer**, **CorrectAnswer**, and **IncorrectAnswer** in **QuizResultComponent.jsx**: Styled components used to format the quiz result display.
 
-## För VG (Additional Requirements for Higher Grade):
-- [x] **Component Count:** Your project includes at least 8 components (`QuestionComponent`, `NextButtonComponent`, `QuizResultComponent`, `ErrorComponent`, `RestartButtonComponent`, and possibly others not mentioned in the provided snippets).
-- [x] **Code Formatting:** The code formatting seems to be consistent, especially if you've used Prettier extension in VS Code.
+- [x] **Hooks Usage:**
+1. useReducer:
+In the QuizProvider component within QuizContext.jsx, useReducer is used to manage the state and dispatch actions.  
+2. useContext:
+In the useQuizState and useQuizDispatch custom hooks within QuizContext.jsx, useContext is used to access the state and dispatch functions from the context provider. Here's how it's implemented:
+
+## For VG (Additional Requirements for Higher Grade):
+- [x] **Component Count:**
+See function component section.  
+Additionally, the App component in App.jsx is also a component, but it serves as the entry point of the application and does not render any UI components directly.
+- [x] **Code Formatting:**
+The code formatting is consistent, Prettier extension is installed in VS Code.
 - [ ] **Unit Testing & Error Handling:** Your project seems to demonstrate unit testing and error handling, as evident from the presence of error components and the logic for error handling in fetching quiz questions.
 
