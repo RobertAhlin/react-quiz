@@ -1,6 +1,27 @@
 # Quiz made with React.
 <img src="readmefiles/quiz-area-01.jpg" alt="View of the quiz area">
 
+# Preface
+(in Swedish)  
+Välkommen till Laboration 2 , Webbutveckling i React
+Projektet är ett individuellt arbete.
+Ni får välja själva vilken webbsida/applikation ni ska göra men nedan krav ska uppfyllas och ni ska skapa ett github repository.
+
+Tänk på att hela tiden göra "commit" samt en "push", om ni är osäkra på hur man hanterar detta så är mitt tips att ni kikar på denna tutorial igen https://app.pluralsight.com/library/courses/github-getting-started/table-of-contents
+
+Vänligen lämna in en länk till ert Github repository
+
+**För G**
+-   Sätta upp ett React projekt med create-react-app eller Vite
+-   Minst 5 funktionskomponenter
+-   Hämta data från extern API (för inspiration, se: [https://github.com/public-apis/public-apis](https://github.com/public-apis/public-apis)) Använd fetch, axios, react-query eller annat bibliotek.
+-   Styla componenter med "css-in-js" (använd bibliotek som tex [Styled Components](https://styled-components.com/) eller [Emotion](https://emotion.sh/docs/introduction)) 
+-   Använd minst 2 eller om så önskas fler av följande hooks: useReducer, useContext, useMemo och useCallback    
+ 
+**För VG**  
+-   Minst 8 komponenter      
+-   Enhetligt formaterad kod (Använd https://prettier.io/ extension i VS Code)
+
 ## Description:
 The Quiz App is a React application that allows users to take a quiz consisting of multiple-choice questions fetched from an API. It features dynamic question rendering, user answer selection, progress tracking, and displays quiz results upon completion. The app utilizes styled components for styling, error handling for fetching questions, and context API for state management.
 
