@@ -148,6 +148,12 @@ The code formatting is consistent, Prettier extension is installed in VS Code.
 The application start without any errors in the console:
 <img src="readmefiles/starting-without-errors.jpg" alt="view of empty console">
 
+# Lighthouse Accessibility test
+It is good practice to test the accessibility.  
+The Quiz app was tested for Accessibility with Lighthouse in Chrome browser.  
+I got a suggestion to change the contrast of the Next Question button. So I changed it to some darker blue.  
+Now the score was improved:  
+<img src="readmefiles/lighthouse-accessibility.jpg" alt="view of lighthouse accessibility performance">
 
 # Installation and Setup:
 1. Clone the Repository:  
@@ -167,3 +173,12 @@ This will start the development server and open the Quiz App in your default web
 5. Access the Application:  
 Once the development server is started, you can access the Quiz App in your web browser. (E.g. http://localhost:3000 )
 
+# More development?
+I hade more ideas to develop for the game, but chosed not to do it as it feel a bit out of the scope.  
+Things like:  
+* Start/Landing page. With a flashy hero image.
+* Game play Instructions in the application.
+* Ability to select the number of questions.
+* Option to select different genre of the questions.
+* Save name and result for a high score board.
+* Toggle Dark and Light mode.
