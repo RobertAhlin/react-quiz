@@ -1,10 +1,10 @@
-// QuizComponent.jsx
-import React, { useEffect, useState } from 'react';
-import { fetchQuizQuestions } from '../api/Api';
+import { useEffect, useState } from 'react';
+import { fetchQuizQuestions } from '../api/api';
 import QuestionComponent from './QuestionComponent';
 import NextButtonComponent from './NextButtonComponent';
 import QuizResultComponent from './QuizResultComponent';
 import ErrorComponent from './ErrorComponent';
+import RestartButtonComponent from './RestartButtonComponent'; // Import the RestartButtonComponent
 
 const QuizComponent = () => {
   const [questions, setQuestions] = useState([]);
@@ -12,30 +12,31 @@ const QuizComponent = () => {
   const [correctAnswers, setCorrectAnswers] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+
+  const fetchQuestions = async () => {
+    try {
+      const cachedData = localStorage.getItem('cachedQuestions');
+      if (cachedData) {
+        const parsedData = JSON.parse(cachedData);
+        setQuestions(parsedData);
+        setSelectedAnswers(Array(parsedData.length).fill(''));
+      } else {
+        const data = await fetchQuizQuestions();
+        if (Array.isArray(data.results)) {
+          setQuestions(data.results);
+          setSelectedAnswers(Array(data.results.length).fill(''));
+          localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
+        } else {
+          setError('Invalid data format');
+        }
+      }
+    } catch (error) {
+      setError('Error fetching quiz questions');
+    }
+  };
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const cachedData = localStorage.getItem('cachedQuestions');
-        if (cachedData) {
-          const parsedData = JSON.parse(cachedData);
-          setQuestions(parsedData);
-          setSelectedAnswers(Array(parsedData.length).fill(''));
-        } else {
-          const data = await fetchQuizQuestions();
-          if (Array.isArray(data.results)) {
-            setQuestions(data.results);
-            setSelectedAnswers(Array(data.results.length).fill(''));
-            localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
-          } else {
-            setError('Invalid data format');
-          }
-        }
-      } catch (error) {
-        setError('Error fetching quiz questions');
-      }
-    };
-
     fetchQuestions();
   }, []);
 
@@ -65,12 +66,23 @@ const QuizComponent = () => {
       }
     });
     setCorrectAnswers(correctCount);
+    setQuizCompleted(true);
+  };
+
+  const handleRestartQuiz = () => {
+    setQuestions([]);
+    setSelectedAnswers([]);
+    setCorrectAnswers(null);
+    setCurrentQuestionIndex(0);
+    setError(null);
+    setQuizCompleted(false);
+    fetchQuestions(); // Fetch new questions
   };
 
   return (
     <div>
       {error && <ErrorComponent error={error} />}
-      {questions.length > 0 && currentQuestionIndex < questions.length && (
+      {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
         <div>
           <QuestionComponent
             questionNumber={currentQuestionIndex}
@@ -82,7 +94,12 @@ const QuizComponent = () => {
         </div>
       )}
 
-      {correctAnswers !== null && <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />}
+      {quizCompleted && (
+        <div>
+          <QuizResultComponent questions={questions} selectedAnswers={selectedAnswers} />
+          <RestartButtonComponent onClick={handleRestartQuiz} /> {/* Render RestartButtonComponent */}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,7 @@
 // QuizContext.jsx
-import React, { createContext, useContext, useReducer } from 'react';
+
+import PropTypes from 'prop-types';
+import { createContext, useContext, useReducer } from 'react';
 
 const QuizStateContext = createContext();
 const QuizDispatchContext = createContext();
@@ -37,6 +39,10 @@ export const QuizProvider = ({ children }) => {
       <QuizDispatchContext.Provider value={dispatch}>{children}</QuizDispatchContext.Provider>
     </QuizStateContext.Provider>
   );
+};
+
+QuizProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useQuizState = () => {

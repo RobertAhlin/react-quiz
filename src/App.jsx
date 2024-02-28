@@ -1,6 +1,5 @@
 // App.js
 
-import React from 'react';
 import { QuizProvider } from './contexts/QuizContext';
 import QuizComponent from './components/QuizComponent';
 

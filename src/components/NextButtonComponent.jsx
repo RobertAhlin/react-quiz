@@ -1,4 +1,6 @@
 // NextButtonComponent.jsx
+
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -17,6 +19,10 @@ const Button = styled.button`
 
 const NextButtonComponent = ({ moveToNextQuestion }) => {
   return <Button onClick={moveToNextQuestion}>Next Question</Button>;
+};
+
+NextButtonComponent.propTypes = {
+  moveToNextQuestion: PropTypes.func.isRequired,
 };
 
 export default NextButtonComponent;
