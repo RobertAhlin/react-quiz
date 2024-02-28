@@ -6,22 +6,22 @@ import QuizResultComponent from './QuizResultComponent';
 import ErrorComponent from './ErrorComponent';
 import RestartButtonComponent from './RestartButtonComponent';
 import LoadingComponent from './LoadingComponent';
-import ProgressBarComponent from './ProgressBarComponent'; // Import ProgressBarComponent
+import ProgressBarComponent from './ProgressBarComponent';
 import styled from 'styled-components';
 
 // Styled component for the container
 const Container = styled.div`
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  margin-top: 2vh;
+  justify-content: center;
+  margin-top: 5vh;
 `;
 
 // Styled component for the quiz area
 const QuizArea = styled.div`
-  width: 80%; /* Adjust the width as needed */
+  width: 80%;
   background-color: #f2f2f2; /* Light gray background color */
-  padding: 20px; /* Add some padding for spacing */
-  border-radius: 10px; /* Rounded corners for the box */
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 const QuizComponent = () => {
@@ -31,7 +31,7 @@ const QuizComponent = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
   const [quizCompleted, setQuizCompleted] = useState(false);
-  const [loading, setLoading] = useState(true); // State to track loading status
+  const [loading, setLoading] = useState(true);
 
   const fetchQuestions = async () => {
     try {
@@ -40,14 +40,14 @@ const QuizComponent = () => {
         const parsedData = JSON.parse(cachedData);
         setQuestions(parsedData);
         setSelectedAnswers(Array(parsedData.length).fill(''));
-        setLoading(false); // Set loading to false after fetching cached questions
+        setLoading(false);
       } else {
         const data = await fetchQuizQuestions();
         if (Array.isArray(data.results)) {
           setQuestions(data.results);
           setSelectedAnswers(Array(data.results.length).fill(''));
           localStorage.setItem('cachedQuestions', JSON.stringify(data.results));
-          setLoading(false); // Set loading to false after fetching new questions
+          setLoading(false);
         } else {
           setError('Invalid data format');
         }
@@ -97,8 +97,8 @@ const QuizComponent = () => {
     setCurrentQuestionIndex(0);
     setError(null);
     setQuizCompleted(false);
-    setLoading(true); // Set loading to true when restarting quiz
-    fetchQuestions(); // Fetch new questions
+    setLoading(true);
+    fetchQuestions();
   };
 
   // Calculate progress percentage
@@ -110,7 +110,7 @@ const QuizComponent = () => {
         <LoadingComponent />
       ) : (
         <QuizArea> {/* Apply styles to the QuizArea */}
-          <ProgressBarComponent progress={progress} /> {/* Place progress bar inside the QuizArea */}
+          <ProgressBarComponent progress={progress} />
           {error && <ErrorComponent error={error} />}
           {!quizCompleted && questions.length > 0 && currentQuestionIndex < questions.length && (
             <div>

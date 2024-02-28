@@ -1,5 +1,3 @@
-// App.jsx
-
 import { QuizProvider } from './contexts/QuizContext';
 import QuizComponent from './components/QuizComponent';
 

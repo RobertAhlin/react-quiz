@@ -1,5 +1,3 @@
-// ErrorComponent.jsx
-
 import PropTypes from 'prop-types';
 
 const ErrorComponent = ({ error }) => {

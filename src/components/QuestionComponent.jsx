@@ -1,5 +1,3 @@
-//QuestionComponent.jsx
-
 import PropTypes from 'prop-types';
 
 const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAnswerSelect }) => {
@@ -29,7 +27,7 @@ const QuestionComponent = ({ questionNumber, question, selectedAnswer, handleAns
   );
 };
 
-// Add PropTypes validation
+// PropTypes validation
 QuestionComponent.propTypes = {
   questionNumber: PropTypes.number.isRequired,
   question: PropTypes.object.isRequired,

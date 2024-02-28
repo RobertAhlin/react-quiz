@@ -1,5 +1,3 @@
-// ProgressBarComponent.jsx
-
 import styled from 'styled-components';
 
 // Styled component for the progress bar
